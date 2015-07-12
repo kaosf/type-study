@@ -99,7 +99,7 @@ ka (<a href="http://www.kaosfield.net">kaosfield</a>)
 <div id="高階関数の型" class="slide section level1">
 <h1>高階関数の型</h1>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">f</span>(g) <span class="op">{</span>
-  <span class="cf">return</span> <span class="at">g</span>(x) <span class="op">*</span> <span class="at">g</span>(x)
+  <span class="cf">return</span> <span class="at">g</span>(<span class="dv">1</span>) <span class="op">*</span> <span class="at">g</span>(<span class="dv">2</span>)
 <span class="op">}</span>
 
 <span class="kw">function</span> <span class="at">g1</span>(x) <span class="op">{</span>
@@ -121,7 +121,7 @@ ka (<a href="http://www.kaosfield.net">kaosfield</a>)
 <p>これは高階関数を使えば一引数の関数だけで実装可能になる</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">product</span>(x) <span class="op">{</span>
   <span class="cf">return</span> <span class="kw">function</span>(y) <span class="op">{</span>
-    x <span class="op">*</span> y
+    <span class="cf">return</span> x <span class="op">*</span> y
   <span class="op">}</span>
 <span class="op">}</span>
 
@@ -132,7 +132,7 @@ ka (<a href="http://www.kaosfield.net">kaosfield</a>)
 <h1>カリー化された関数の型</h1>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">product</span>(x) <span class="op">{</span>
   <span class="cf">return</span> <span class="kw">function</span>(y) <span class="op">{</span>
-    x <span class="op">*</span> y
+    <span class="cf">return</span> x <span class="op">*</span> y
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
 <p>まず外側のfunctionに注目</p>

@@ -46,7 +46,7 @@ string toString(int x) {
 
 ```javascript
 function f(g) {
-  return g(x) * g(x)
+  return g(1) * g(2)
 }
 
 function g1(x) {
@@ -78,7 +78,7 @@ function product(x, y) {
 ```javascript
 function product(x) {
   return function(y) {
-    x * y
+    return x * y
   }
 }
 
@@ -92,7 +92,7 @@ product(2)(3) //=> 6
 ```javascript
 function product(x) {
   return function(y) {
-    x * y
+    return x * y
   }
 }
 ```
