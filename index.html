@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="ka (kaosfield)" />
+  <title>型の勉強</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">型の勉強</h1>
+  <p class="author">
+ka (<a href="http://www.kaosfield.net">kaosfield</a>)
+  </p>
+</div>
+<div id="注意" class="slide section level1">
+<h1>注意</h1>
+<p>自分自身の復習や予習も兼ねてのスライドです</p>
+<p>間違いや勘違いが含まれる可能性が多分にあります</p>
+</div>
+<div id="型とは" class="slide section level1">
+<h1>型とは</h1>
+<p>値の集合の形</p>
+<ul>
+<li>
+1の型はInteger
+</li>
+<li>
+&quot;a&quot;の型はString
+</li>
+<li>
+3.14の型はFloating
+</li>
+</ul>
+</div>
+<div id="関数にも型がある" class="slide section level1">
+<h1>関数にも型がある</h1>
+<p>関数自体も無名関数が即時に作れて変数に代入したり出来るので値である</p>
+<p>フォン・ノイマン型の世界においてはプログラム自体がメモリ上に格納されて変化しうる単なる値であるとも考えられる</p>
+</div>
+<div id="関数の型" class="slide section level1">
+<h1>関数の型</h1>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> <span class="dt">double</span>(<span class="dt">int</span> x)
+{
+  <span class="kw">return</span> x * <span class="dv">2</span>;
+}</code></pre></div>
+<p>これの型は<span class="math inline">\(Integer → Integer\)</span>と書く</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">string <span class="fu">toString</span>(<span class="dt">int</span> x) {
+  <span class="kw">return</span> <span class="fu">toString</span>(x);
+}</code></pre></div>
+<p>これの型は<span class="math inline">\(Integer → String\)</span>と書く</p>
+</div>
+<div id="高階関数の型" class="slide section level1">
+<h1>高階関数の型</h1>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">f</span>(g) <span class="op">{</span>
+  <span class="cf">return</span> <span class="at">g</span>(x) <span class="op">*</span> <span class="at">g</span>(x)
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="at">g1</span>(x) <span class="op">{</span>
+  <span class="cf">return</span> x <span class="op">+</span> <span class="dv">1</span>
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="at">g2</span>(x) <span class="op">{</span>
+  <span class="cf">return</span> x <span class="op">*</span> <span class="dv">2</span>
+<span class="op">}</span></code></pre></div>
+<p>g1とg2の型は <span class="math inline">\(Integer → Integer\)</span></p>
+<p>fの型は<span class="math inline">\(Integer → Integer\)</span>を引数にして<span class="math inline">\(Integer\)</span>を返すので</p>
+<p><span class="math inline">\((Integer → Integer) → Integer\)</span></p>
+</div>
+<div id="引数の数が2以上の場合" class="slide section level1">
+<h1>引数の数が2以上の場合</h1>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">product</span>(x<span class="op">,</span> y) <span class="op">{</span>
+  <span class="cf">return</span> x <span class="op">*</span> y
+<span class="op">}</span></code></pre></div>
+<p>これは高階関数を使えば一引数の関数だけで実装可能になる</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">product</span>(x) <span class="op">{</span>
+  <span class="cf">return</span> <span class="kw">function</span>(y) <span class="op">{</span>
+    x <span class="op">*</span> y
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="at">product</span>(<span class="dv">2</span>)(<span class="dv">3</span>) <span class="co">//=&gt; 6</span></code></pre></div>
+<p>これを関数のカリー化と言う</p>
+</div>
+<div id="カリー化された関数の型" class="slide section level1">
+<h1>カリー化された関数の型</h1>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">product</span>(x) <span class="op">{</span>
+  <span class="cf">return</span> <span class="kw">function</span>(y) <span class="op">{</span>
+    x <span class="op">*</span> y
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>まず外側のfunctionに注目</p>
+<p><span class="math inline">\(Integer\)</span> である x を受け取り関数を返している</p>
+<p><span class="math inline">\(Integer → (T → S)\)</span>という型になる(<span class="math inline">\(T\)</span>, <span class="math inline">\(S\)</span>は型変数)</p>
+<p>返している関数の型は<span class="math inline">\(Integer\)</span> yを受け取り<span class="math inline">\(Integer\)</span>を返り値にしているので<span class="math inline">\(Integer → Integer\)</span>である</p>
+<p>以上より関数productの型は<span class="math inline">\(Integer → (Integer → Integer)\)</span>である</p>
+</div>
+<div id="の結合の優先順位" class="slide section level1">
+<h1><span class="math inline">\(→\)</span>の結合の優先順位</h1>
+<p>右結合にするのが一般的である</p>
+<p>すなわち</p>
+<p><span class="math inline">\(Integer → Integer → Integer\)</span></p>
+<p>は</p>
+<p><span class="math inline">\(Integer → (Integer → Integer)\)</span></p>
+<p>である</p>
+<p>同様に <span class="math inline">\(T_1 → T_2 → T_3 → T_4\)</span> は <span class="math inline">\(T_1 → (T_2 → (T_3 → T_4))\)</span> である</p>
+</div>
+<div id="関数の型の読み方1" class="slide section level1">
+<h1>関数の型の読み方(1)</h1>
+<p><span class="math inline">\(T_1 → T_2 → T_3 → T_4\)</span></p>
+<p>型が<span class="math inline">\(T_1, T_2, T_3\)</span>の3つの引数を受け取り型が<span class="math inline">\(T_4\)</span>の戻り値を返す関数の型</p>
+<p>と読める</p>
+<h2 id="例">例</h2>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(x<span class="op">,</span> y<span class="op">,</span> z) <span class="op">{</span>
+  <span class="cf">return</span> x <span class="op">+</span> y <span class="op">+</span> z
+<span class="op">}</span></code></pre></div>
+</div>
+<div id="カリー化すると" class="slide section level1">
+<h1>カリー化すると</h1>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(x) <span class="op">{</span>
+  <span class="cf">return</span> <span class="kw">function</span>(y) <span class="op">{</span>
+    <span class="cf">return</span> <span class="kw">function</span>(z) <span class="op">{</span>
+      <span class="cf">return</span> x <span class="op">+</span> y <span class="op">+</span> z
+    <span class="op">}</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+</div>
+<div id="関数の型の読み方2" class="slide section level1">
+<h1>関数の型の読み方(2)</h1>
+<p><span class="math inline">\((T_1 → T_2) → (T_3 → T_4)\)</span></p>
+<p>型が<span class="math inline">\(T1 → T2\)</span>となる関数を引数に受け取り型が<span class="math inline">\(T_3→T_4\)</span>となる関数を戻り値とする関数の型</p>
+<p>と読める</p>
+<h2 id="例-1">例</h2>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> (f) <span class="op">{</span>
+  <span class="cf">return</span> <span class="kw">function</span>(x) <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+</div>
+<div id="型クラス" class="slide section level1">
+<h1>型クラス</h1>
+<p>オブジェクト指向で言う所のインタフェイスみたいなもの</p>
+<p>Haskellでは<span class="math inline">\(Integer\)</span>型は<span class="math inline">\(Ord\)</span>という型クラスのインスタンスである</p>
+<p><span class="math inline">\(Ord\)</span>型クラスに属する型に属する値はOrdinaryでなければならない(順序を持ってなければならない)</p>
+<h2 id="例-2">例</h2>
+<p><span class="math inline">\(Ord\)</span>型クラスに属する<span class="math inline">\(Integer\)</span>型の値1, 2, 3...は順序を持っている</p>
+<pre><code>... &lt; 0 &lt; 1 &lt; 2 &lt; 3 &lt; 4 &lt; ...</code></pre>
+</div>
+<div id="型クラスの継承関係" class="slide section level1">
+<h1>型クラスの継承関係</h1>
+<p><span class="math inline">\(Ord\)</span>型クラスは<span class="math inline">\(Eq\)</span>型クラスを継承している</p>
+<p><span class="math inline">\(Eq\)</span>型クラスは属する型の値が同値かどうかが確認出来なければならない(=の演算が出来なければならない)</p>
+<p>※代入ではない</p>
+<p><span class="math inline">\(Integer\)</span>と<span class="math inline">\(Floating\)</span>型クラスは<span class="math inline">\(Num\)</span>型クラスを継承している</p>
+</div>
+<div id="maybe型やoptional型" class="slide section level1">
+<h1>Maybe型やOptional型</h1>
+<ul>
+<li>
+HaskellにはMaybe型
+</li>
+<li>
+SwiftにはOptional(Int)型で実現されるInt?
+</li>
+</ul>
+<p>などがある</p>
+</div>
+<div id="型コンストラクタ" class="slide section level1">
+<h1>型コンストラクタ</h1>
+<p>型クラスは型コンストラクタを持つ</p>
+<p>型コンストラクタは型を引数に取ることがある</p>
+<p>Array型クラスなどはIntegerやFloatingなどの型を取りIntegerやFloatingの配列型となる</p>
+<p>C++のtemplateを知ってる人は想像すると分かりやすいかも</p>
+</div>
+<div id="例-3" class="slide section level1">
+<h1>例</h1>
+<p>OptionalもMaybeも型クラスである</p>
+<p>Optional(Int)型はInt型の値か又はnilを持つ</p>
+<p>Maybe IntegerはInteger型の値か又はNothingを持つ</p>
+</div>
+<div id="section" class="slide section level1">
+<h1></h1>
+<p>そういうものを扱う方法を抽象化することが出来る</p>
+<ul class="incremental">
+<li>Functor</li>
+<li>Applicative</li>
+<li>Monad</li>
+</ul>
+</div>
+<div id="型" class="slide section level1">
+<h1>型</h1>
+<p>Functor</p>
+<p><span class="math inline">\((a → b) → (f a → f b)\)</span></p>
+<p>Applicative</p>
+<p><span class="math inline">\(f (a → b) → f a → f b\)</span></p>
+<p>Monad</p>
+<p><span class="math inline">\(m a → (a → b) → m b\)</span></p>
+</div>
+</body>
+</html>
+<!-- Pandoc version:
+pandoc 1.14.0.4
+Compiled with texmath 0.8.2, highlighting-kate 0.6.
+Syntax highlighting is supported for the following languages:
+    abc, actionscript, ada, agda, apache, asn1, asp, awk, bash, bibtex, boo, c,
+    changelog, clojure, cmake, coffee, coldfusion, commonlisp, cpp, cs, css,
+    curry, d, diff, djangotemplate, dockerfile, dot, doxygen, doxygenlua, dtd,
+    eiffel, email, erlang, fasm, fortran, fsharp, gcc, glsl, gnuassembler, go,
+    haskell, haxe, html, idris, ini, isocpp, java, javadoc, javascript, json,
+    jsp, julia, kotlin, latex, lex, lilypond, literatecurry, literatehaskell,
+    lua, m4, makefile, mandoc, markdown, mathematica, matlab, maxima, mediawiki,
+    metafont, mips, modelines, modula2, modula3, monobasic, nasm, noweb,
+    objectivec, objectivecpp, ocaml, octave, opencl, pascal, perl, php, pike,
+    postscript, prolog, pure, python, r, relaxng, relaxngcompact, rest, rhtml,
+    roff, ruby, rust, scala, scheme, sci, sed, sgml, sql, sqlmysql,
+    sqlpostgresql, tcl, tcsh, texinfo, verilog, vhdl, xml, xorg, xslt, xul,
+    yacc, yaml, zsh
+Default user data directory: <DELETED>
+Copyright (C) 2006-2015 John MacFarlane
+Web:  http://johnmacfarlane.net/pandoc
+This is free software; see the source for copying conditions.
+There is no warranty, not even for merchantability or fitness
+for a particular purpose.
+-->
