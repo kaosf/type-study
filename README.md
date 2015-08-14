@@ -245,3 +245,97 @@ $f (a → b) → f a → f b$
 Monad
 
 $m a → (a → m b) → m b$
+
+# ここから臨時
+
+# JavaScriptやRubyでは
+
+動的に型が決まるので常にnilになる可能性がある
+
+正しく？product関数を実装するには
+
+```ruby
+def product(x, y)
+  if x && y # 本質
+    x * y
+  else      # では
+    nil     # ない
+  end       # コード
+end
+```
+
+nilチェックを常にしなければならない
+
+#
+
+更に厳密にするなら
+
+```ruby
+def product(x, y)
+  if x && y
+    if x.respond_to? :*
+      x * y
+    else
+      nil
+    end
+  else
+    nil
+  end
+end
+```
+
+`*`演算が出来るかどうか確認する必要がある
+
+#
+
+しかしそれでもこのproduct関数を落とせる
+
+```ruby
+1 * :a
+# TypeError: no implicit conversion of Symbol into Integer
+#         from (irb):1:in `*'
+#         from (irb):1
+#         from /some/where/bin/irb:11:in `<main>'
+```
+
+関数呼び出し時に型がチェックされるわけではない
+
+`y`に数値が渡ってくる保証がない
+
+#
+
+```ruby
+def product(x, y)
+  if x && y
+    if x.respond_to? :*
+      if y.instance_of? Fixnum || y.instance_of? Float
+        x * y
+      else
+        nil
+      end
+    else
+      nil
+    end
+  else
+    nil
+  end
+end
+```
+
+これもうわかんねぇな
+
+#
+
+そもそもダメなときにnilを返すので良いのか？
+
+悲しみを生み出す可能性を自分でまた苦労してまで生み出すべきなのか？
+
+なので`product`関数は
+
+```ruby
+def product(x, y)
+  x * y
+end
+```
+
+とだけ実装出来て欲しい
